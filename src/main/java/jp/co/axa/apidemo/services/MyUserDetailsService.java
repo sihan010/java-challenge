@@ -3,6 +3,7 @@ package jp.co.axa.apidemo.services;
 import jp.co.axa.apidemo.entities.User;
 import jp.co.axa.apidemo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
+    @Cacheable(cacheNames = {"tokenCache"}, key = "#username")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userRes = userRepository.findByUsername(username);
         if (userRes.isPresent()) {

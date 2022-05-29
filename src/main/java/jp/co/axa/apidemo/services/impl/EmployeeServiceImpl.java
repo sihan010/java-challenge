@@ -5,6 +5,9 @@ import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
 import jp.co.axa.apidemo.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll();
     }
 
+    @Cacheable(cacheNames = {"employeeCache"}, key = "#employeeId")
     public Optional<Employee> getEmployee(UUID employeeId) {
         return employeeRepository.findById(employeeId);
     }
@@ -31,10 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return e.getId();
     }
 
+    @CacheEvict(cacheNames = {"employeeCache"}, key="#employeeId")
     public void deleteEmployee(UUID employeeId) {
         employeeRepository.deleteById(employeeId);
     }
 
+    @CachePut(cacheNames = {"employeeCache"}, key="#employee.employeeId")
     public Employee updateEmployee(Employee employee, EmployeeDTO employeeDto) {
         employee.setName(employeeDto.getName());
         employee.setDepartment(employeeDto.getDepartment());

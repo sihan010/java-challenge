@@ -1,5 +1,7 @@
 ### How to use this spring-boot project
 
+- Clone this repository
+- CD into the project
 - Install packages with `mvn package`
 - Run `mvn spring-boot:run` for starting the application (or use your IDE)
 
@@ -10,43 +12,28 @@ Application (with the embedded H2 database) is ready to be used ! You can access
 
 > Don't forget to set the `JDBC URL` value as `jdbc:h2:mem:testdb` for H2 UI.
 
+### What I did
 
+- Improved Employee Controller, Service with Proper REST guideline (statuscode, header etc)
+- Added validation
+- Added JWT authentication with AuthController for login and Registration
+- Added protection to Employee endpoints (GET endpoints are open)
+- Added Caching for Employee Service (GET, PUT, DELETE)
 
-### Instructions
+### What I wish I could do
 
-- download the zip file of this project
-- create a repository in your own github named 'java-challenge'
-- clone your repository in a folder on your machine
-- extract the zip file in this folder
-- commit and push
+- Add Unit Test
+- Make Swagger more robust
 
-- Enhance the code in any ways you can see, you are free! Some possibilities:
-  - Add tests
-  - Change syntax
-  - Protect controller end points
-  - Add caching logic for database calls
-  - Improve doc and comments
-  - Fix any bug you might find
-- Edit readme.md and add any comments. It can be about what you did, what you would have done if you had more time, etc.
-- Send us the link of your repository.
+### How to smoke test
 
-#### Restrictions
-- use java 8
+- Import `Java_Challange_AXA.postman_collection.json` to Postman
+- Register -> Login (Get Token) -> Paste Token to Authorization Header to test other endpoints
 
+#### My experience in Java
 
-#### What we will look for
-- Readability of your code
-- Documentation
-- Comments in your code 
-- Appropriate usage of spring boot
-- Appropriate usage of packages
-- Is the application running as expected
-- No performance issues
-
-#### Your experience in Java
-
-Please let us know more about your Java experience in a few sentences. For example:
-
-- I have 3 years experience in Java and I started to use Spring Boot from last year
-- I'm a beginner and just recently learned Spring Boot
-- I know Spring Boot very well and have been using it for many years
+- I have limited experience in Java. I mostly worked with Java with android
+- Now I switched to React native, so don't use java anymore, unless I have to write native modules (I try to choose Kotlin though)                               
+- In my current company we use Kotlin and Vert.x to develop microservices
+- I have quite good knowledge in Kotlin, but I'm somewhat beginner with Java and Spring Boot 
+- Interested to learn and use reactive stack of spring boot with kotlin coroutines 
