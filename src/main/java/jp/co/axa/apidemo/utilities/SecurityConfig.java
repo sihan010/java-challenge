@@ -38,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll() // all allowed for auth endpoints
+                // only GET allowed for employee endpoints
                 .antMatchers(HttpMethod.POST,"/api/v1/employees/**").hasRole("USER")
                 .antMatchers(HttpMethod.PUT,"/api/v1/employees/**").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE,"/api/v1/employees/**").hasRole("USER")

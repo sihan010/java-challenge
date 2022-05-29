@@ -30,6 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public UUID saveEmployee(EmployeeDTO employeeDto) {
+        // Map EmployeeDTO to Employee and save, ID auto generated
         Employee employee = new Employee(employeeDto.getName(), employeeDto.getSalary(), employeeDto.getDepartment());
         Employee e = employeeRepository.save(employee);
         return e.getId();
@@ -42,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @CachePut(cacheNames = {"employeeCache"}, key="#employee.employeeId")
     public Employee updateEmployee(Employee employee, EmployeeDTO employeeDto) {
+        // Map EmployeeDTO to Employee and save
         employee.setName(employeeDto.getName());
         employee.setDepartment(employeeDto.getDepartment());
         employee.setSalary(employeeDto.getSalary());

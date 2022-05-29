@@ -1,5 +1,6 @@
 package jp.co.axa.apidemo.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import jp.co.axa.apidemo.dto.*;
 import jp.co.axa.apidemo.entities.User;
 import jp.co.axa.apidemo.services.AuthService;
@@ -35,33 +36,35 @@ public class AuthController {
     private final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @PostMapping("/register")
+    @ApiOperation(value = "Used to Register for the system")
     public ResponseEntity registerUser(@RequestBody RegisterDTO registerDto) {
-        ArrayList<String> validationErrors = registerDto.validate();
-        if (validationErrors.size() > 0) {
+        ArrayList<String> validationErrors = registerDto.validate(); // Validate input
+        if (validationErrors.size() > 0) { // If any errors, return with 400
             return new ResponseEntity(new ValidationErrorsDTO(validationErrors), HttpStatus.BAD_REQUEST);
         }
         User user = authService.register(registerDto);
         logger.info("User registered Successfully");
-        return new ResponseEntity(user, HeaderUtilities.commonHeaders(), HttpStatus.OK);
+        return new ResponseEntity(user, HeaderUtilities.commonHeaders(), HttpStatus.OK); // Success
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "Used to Login to the system")
     public ResponseEntity loginUser(@RequestBody LoginDTO loginDTO) {
-        ArrayList<String> validationErrors = loginDTO.validate();
-        if (validationErrors.size() > 0) {
+        ArrayList<String> validationErrors = loginDTO.validate(); // Validate input
+        if (validationErrors.size() > 0) { // If any errors, return with 400
             return new ResponseEntity(new ValidationErrorsDTO(validationErrors), HttpStatus.BAD_REQUEST);
         }
         try {
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
 
-            authManager.authenticate(authInputToken);
+            authManager.authenticate(authInputToken); //
 
-            String token = jwtUtil.generateToken(loginDTO.getUsername());
+            String token = jwtUtil.generateToken(loginDTO.getUsername()); // Generate JWT
 
-            return new ResponseEntity(new LoginSuccessDTO(token), HeaderUtilities.commonHeaders(), HttpStatus.OK);
+            return new ResponseEntity(new LoginSuccessDTO(token), HeaderUtilities.commonHeaders(), HttpStatus.OK); // Success
         } catch (AuthenticationException authExc) {
-            return new ResponseEntity(new LoginFailureDTO("Username or Password Incorrect"), HeaderUtilities.commonHeaders(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(new LoginFailureDTO("Username or Password Incorrect"), HeaderUtilities.commonHeaders(), HttpStatus.UNAUTHORIZED); // failure
         }
     }
 }
