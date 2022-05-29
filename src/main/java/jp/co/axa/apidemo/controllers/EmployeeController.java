@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,12 +24,8 @@ import java.util.UUID;
 public class EmployeeController {
 
     @Autowired
-    private final EmployeeService employeeService;
+    private EmployeeService employeeService;
     private final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
-
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
 
     @GetMapping("/employees")
     public ResponseEntity getEmployees() {

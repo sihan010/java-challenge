@@ -1,8 +1,9 @@
-package jp.co.axa.apidemo.services;
+package jp.co.axa.apidemo.services.impl;
 
 import jp.co.axa.apidemo.dto.EmployeeDTO;
 import jp.co.axa.apidemo.entities.Employee;
 import jp.co.axa.apidemo.repositories.EmployeeRepository;
+import jp.co.axa.apidemo.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,7 @@ import java.util.UUID;
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
-    private final EmployeeRepository employeeRepository;
-
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+    private EmployeeRepository employeeRepository;
 
     public List<Employee> retrieveEmployees() {
         return employeeRepository.findAll();
